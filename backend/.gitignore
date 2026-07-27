@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+.env
+nomly.db
+.pytest_cache/

@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #fafafa;
+  --foreground: #1a1523;
+  --surface: #ffffff;
+  --surface-muted: #f5f3f7;
+  --border-subtle: #e9e5ee;
+
+  /* Violet-tinted neutral scale used instead of stock gray/slate/zinc.
+     Defined here (not inside @theme inline) so .dark below can invert them --
+     @theme inline bakes literal values into generated utilities, which would
+     make runtime dark-mode overrides impossible. */
+  --ink-50: #fafafa;
+  --ink-100: #f5f3f7;
+  --ink-200: #e9e5ee;
+  --ink-300: #d6d0de;
+  --ink-400: #aba3b8;
+  --ink-500: #7e7690;
+  --ink-600: #5c5470;
+  --ink-700: #423c52;
+  --ink-800: #2b2636;
+  --ink-900: #1a1523;
+}
+
+.dark {
+  --background: #14101d;
+  --foreground: #f5f3f7;
+  --surface: #1e1829;
+  --surface-muted: #241d33;
+  --border-subtle: #362d47;
+
+  /* Inverted lightness scale so text/backgrounds relying on ink-* stay legible. */
+  --ink-50: #1a1523;
+  --ink-100: #241d33;
+  --ink-200: #362d47;
+  --ink-300: #4a3f5c;
+  --ink-400: #6b6080;
+  --ink-500: #948aa8;
+  --ink-600: #b8afc9;
+  --ink-700: #d6d0de;
+  --ink-800: #ede9f0;
+  --ink-900: #faf9fb;
+}
+
+@theme inline {
+  --font-sans: var(--font-manrope);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border-subtle: var(--border-subtle);
+
+  --color-ink-50: var(--ink-50);
+  --color-ink-100: var(--ink-100);
+  --color-ink-200: var(--ink-200);
+  --color-ink-300: var(--ink-300);
+  --color-ink-400: var(--ink-400);
+  --color-ink-500: var(--ink-500);
+  --color-ink-600: var(--ink-600);
+  --color-ink-700: var(--ink-700);
+  --color-ink-800: var(--ink-800);
+  --color-ink-900: var(--ink-900);
+
+  /* Brand: coral -> violet, deliberately distinct from a literal rose/pink clone.
+     Kept constant across themes (brand colors don't invert). */
+  --color-brand-coral: #ff6b5b;
+  --color-brand-violet: #7c3aed;
+  --color-brand-coral-soft: #ffe8e4;
+  --color-brand-violet-soft: #ede4fb;
+
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+}
+
+* {
+  border-color: var(--border-subtle);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.brand-gradient {
+  background-image: linear-gradient(135deg, var(--color-brand-coral) 0%, var(--color-brand-violet) 100%);
+}
+
+.brand-gradient-text {
+  background-image: linear-gradient(135deg, var(--color-brand-coral) 0%, var(--color-brand-violet) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card-hover {
+  transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px -8px rgba(124, 58, 237, 0.18);
+}
+
+::selection {
+  background: var(--color-brand-violet-soft);
+  color: var(--color-brand-violet);
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.nomly-calendar {
+  --rdp-accent-color: var(--color-brand-violet);
+  --rdp-accent-background-color: var(--color-brand-violet-soft);
+  --rdp-today-color: var(--color-brand-coral);
+  --rdp-day_button-border-radius: 9999px;
+}
+
+/* Decorative blurred blobs used behind hero/empty-state sections for a less
+   templated, more "designed" feel than a flat background color. */
+.brand-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .brand-blob {
+  opacity: 0.3;
+}
+
+.brand-blob-coral {
+  background: var(--color-brand-coral);
+}
+
+.brand-blob-violet {
+  background: var(--color-brand-violet);
+}
+
+.brand-dot-grid {
+  background-image: radial-gradient(var(--color-ink-300) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, black 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, black 40%, transparent 100%);
+  opacity: 0.5;
+}
+
+/* Gradient "ring" wrapper: an outer element painted with the brand gradient,
+   with the actual card content inset by the ring width so only a thin
+   gradient edge shows -- avoids needing a second DOM layer per usage. */
+.gradient-ring {
+  position: relative;
+}
+
+.gradient-ring::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background-image: linear-gradient(135deg, var(--color-brand-coral) 0%, var(--color-brand-violet) 100%);
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+  z-index: -1;
+}
+
+.gradient-ring:hover::before {
+  opacity: 1;
+}
+
+.brand-gradient-underline {
+  background-image: linear-gradient(135deg, var(--color-brand-coral) 0%, var(--color-brand-violet) 100%);
+}
+
+@keyframes confetti-burst {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--rot));
+    opacity: 0;
+  }
+}
+
