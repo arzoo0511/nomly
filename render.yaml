@@ -16,4 +16,4 @@ services:
       - key: DATABASE_URL
         value: sqlite:///./nomly.db
       - key: CORS_ORIGINS
-        value: https://nomly-seven.vercel.app,http://localhost:3000
+        value: https://nomly-lake.vercel.app,http://localhost:3000
