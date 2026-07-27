@@ -24,7 +24,7 @@ export default function MapPopupCard({ listing }: { listing: ListingCard }) {
           <p className="truncate text-sm font-semibold text-ink-900">{listing.city}</p>
           {listing.rating_avg !== null && (
             <span className="flex shrink-0 items-center gap-0.5 text-xs text-ink-700">
-              <Star size={11} className="fill-brand-coral text-brand-coral" />
+              <Star size={11} className="fill-ink-900 text-ink-900" />
               {listing.rating_avg.toFixed(1)}
             </span>
           )}

@@ -27,9 +27,8 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border-subtle bg-surface/90 backdrop-blur-md">
-      <div className="brand-gradient-underline h-[3px] w-full" />
-      <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-4 md:px-8">
+    <header className="sticky top-0 z-40 border-b border-border-subtle bg-surface/95 backdrop-blur-md">
+      <div className="mx-auto flex h-20 max-w-[1280px] items-center justify-between px-4 md:px-8">
         <Link href="/" className="shrink-0">
           <Logo />
         </Link>
@@ -37,7 +36,7 @@ export default function Navbar() {
         <nav className="hidden items-center gap-1 md:flex">
           <Link
             href="/host"
-            className="rounded-full px-4 py-2 text-sm font-semibold text-ink-700 transition-colors hover:bg-brand-violet-soft hover:text-brand-violet"
+            className="rounded-full px-4 py-2 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-100"
           >
             Host your place
           </Link>

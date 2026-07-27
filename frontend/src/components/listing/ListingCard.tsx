@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useToggleFavorite } from "@/hooks/useFavorites";
-import { PROPERTY_TYPE_ICONS, PROPERTY_TYPE_LABELS } from "@/lib/constants";
 import { cn, formatPrice } from "@/lib/utils";
 import type { ListingCard as ListingCardType } from "@/types";
 
@@ -15,7 +14,6 @@ export default function ListingCard({ listing }: { listing: ListingCardType }) {
   const { user } = useAuth();
   const router = useRouter();
   const toggleFavorite = useToggleFavorite();
-  const PropertyIcon = PROPERTY_TYPE_ICONS[listing.property_type];
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -35,7 +33,7 @@ export default function ListingCard({ listing }: { listing: ListingCardType }) {
 
   return (
     <Link href={`/listings/${listing.id}`} className="group flex flex-col gap-2">
-      <div className="card-hover gradient-ring relative aspect-square w-full overflow-hidden rounded-2xl bg-ink-100">
+      <div className="card-hover relative aspect-square w-full overflow-hidden rounded-xl bg-ink-100">
         {listing.cover_image ? (
           <Image
             src={listing.cover_image}
@@ -63,20 +61,16 @@ export default function ListingCard({ listing }: { listing: ListingCardType }) {
             )}
           />
         </button>
-        <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-brand-violet shadow-sm backdrop-blur">
-          <PropertyIcon size={12} />
-          {PROPERTY_TYPE_LABELS[listing.property_type]}
-        </span>
       </div>
 
       <div className="flex flex-col gap-0.5">
         <div className="flex items-start justify-between gap-2">
-          <p className="truncate text-[15px] font-semibold text-ink-900">
+          <p className="truncate text-[15px] font-medium text-ink-900">
             {listing.city}, {listing.region ?? listing.country}
           </p>
           {listing.rating_avg !== null && (
-            <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-ink-700">
-              <Star size={13} className="fill-brand-coral text-brand-coral" />
+            <span className="flex shrink-0 items-center gap-1 text-sm text-ink-900">
+              <Star size={13} className="fill-ink-900 text-ink-900" />
               {listing.rating_avg.toFixed(1)}
             </span>
           )}

@@ -58,7 +58,7 @@ export default function BookingWidget({ listing }: { listing: ListingDetail }) {
         </p>
         {listing.rating_avg !== null && (
           <span className="flex items-center gap-1 text-sm text-ink-700">
-            <Star size={13} className="fill-brand-coral text-brand-coral" />
+            <Star size={13} className="fill-ink-900 text-ink-900" />
             {listing.rating_avg.toFixed(1)} · {listing.review_count} review{listing.review_count === 1 ? "" : "s"}
           </span>
         )}

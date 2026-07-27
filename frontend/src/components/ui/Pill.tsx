@@ -10,10 +10,10 @@ export default function Pill({ active, icon, className, children, ...props }: Pi
     <button
       type="button"
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all cursor-pointer",
+        "inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium whitespace-nowrap transition-all cursor-pointer",
         active
-          ? "brand-gradient border-transparent text-white shadow-sm"
-          : "border-ink-200 bg-surface text-ink-700 hover:border-brand-violet hover:text-brand-violet",
+          ? "border-ink-900 bg-ink-900 text-white"
+          : "border-ink-300 bg-surface text-ink-900 hover:border-ink-900",
         className
       )}
       {...props}

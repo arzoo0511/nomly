@@ -10,7 +10,7 @@ export function RatingStarsDisplay({ rating, size = 14 }: { rating: number; size
         <Star
           key={i}
           size={size}
-          className={i < Math.round(rating) ? "fill-brand-coral text-brand-coral" : "fill-ink-200 text-ink-200"}
+          className={i < Math.round(rating) ? "fill-ink-900 text-ink-900" : "fill-ink-200 text-ink-200"}
         />
       ))}
     </div>
@@ -32,7 +32,7 @@ export function RatingStarsInput({ value, onChange }: { value: number; onChange:
           >
             <Star
               size={28}
-              className={cn(starValue <= value ? "fill-brand-coral text-brand-coral" : "fill-ink-200 text-ink-200")}
+              className={cn(starValue <= value ? "fill-ink-900 text-ink-900" : "fill-ink-200 text-ink-200")}
             />
           </button>
         );

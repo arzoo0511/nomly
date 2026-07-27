@@ -60,7 +60,7 @@ export default function ListingDetailPage() {
       <div className="mb-4 mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink-700">
         {listing.rating_avg !== null && (
           <span className="flex items-center gap-1 font-semibold text-ink-900">
-            <Star size={14} className="fill-brand-coral text-brand-coral" />
+            <Star size={14} className="fill-ink-900 text-ink-900" />
             {listing.rating_avg.toFixed(1)} · {listing.review_count} review{listing.review_count === 1 ? "" : "s"}
           </span>
         )}

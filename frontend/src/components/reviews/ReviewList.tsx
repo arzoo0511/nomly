@@ -30,7 +30,7 @@ export default function ReviewList({
   return (
     <div>
       <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-ink-900">
-        <Star size={18} className="fill-brand-coral text-brand-coral" />
+        <Star size={18} className="fill-ink-900 text-ink-900" />
         {ratingAvg?.toFixed(1)} · {reviewCount} review{reviewCount === 1 ? "" : "s"}
       </h2>
 

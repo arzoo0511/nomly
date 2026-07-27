@@ -3,46 +3,48 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #fafafa;
-  --foreground: #1a1523;
+  --background: #ffffff;
+  --foreground: #222222;
   --surface: #ffffff;
-  --surface-muted: #f5f3f7;
-  --border-subtle: #e9e5ee;
+  --surface-muted: #f7f7f7;
+  --border-subtle: #ebebeb;
 
-  /* Violet-tinted neutral scale used instead of stock gray/slate/zinc.
-     Defined here (not inside @theme inline) so .dark below can invert them --
-     @theme inline bakes literal values into generated utilities, which would
-     make runtime dark-mode overrides impossible. */
-  --ink-50: #fafafa;
-  --ink-100: #f5f3f7;
-  --ink-200: #e9e5ee;
-  --ink-300: #d6d0de;
-  --ink-400: #aba3b8;
-  --ink-500: #7e7690;
-  --ink-600: #5c5470;
-  --ink-700: #423c52;
-  --ink-800: #2b2636;
-  --ink-900: #1a1523;
+  /* Neutral gray scale (not tinted) -- matches Airbnb's actual restrained
+     black/white/gray palette, where color exists only as a single sparing
+     accent rather than throughout the UI. Defined here (not inside @theme
+     inline) so .dark below can invert them -- @theme inline bakes literal
+     values into generated utilities, which would make runtime dark-mode
+     overrides impossible. */
+  --ink-50: #f7f7f7;
+  --ink-100: #ebebeb;
+  --ink-200: #dddddd;
+  --ink-300: #c2c2c2;
+  --ink-400: #a0a0a0;
+  --ink-500: #767676;
+  --ink-600: #5a5a5a;
+  --ink-700: #484848;
+  --ink-800: #333333;
+  --ink-900: #222222;
 }
 
 .dark {
-  --background: #14101d;
-  --foreground: #f5f3f7;
-  --surface: #1e1829;
-  --surface-muted: #241d33;
-  --border-subtle: #362d47;
+  --background: #121212;
+  --foreground: #f2f2f2;
+  --surface: #1c1c1c;
+  --surface-muted: #232323;
+  --border-subtle: #343434;
 
   /* Inverted lightness scale so text/backgrounds relying on ink-* stay legible. */
-  --ink-50: #1a1523;
-  --ink-100: #241d33;
-  --ink-200: #362d47;
-  --ink-300: #4a3f5c;
-  --ink-400: #6b6080;
-  --ink-500: #948aa8;
-  --ink-600: #b8afc9;
-  --ink-700: #d6d0de;
-  --ink-800: #ede9f0;
-  --ink-900: #faf9fb;
+  --ink-50: #222222;
+  --ink-100: #2e2e2e;
+  --ink-200: #3d3d3d;
+  --ink-300: #565656;
+  --ink-400: #7a7a7a;
+  --ink-500: #9c9c9c;
+  --ink-600: #b8b8b8;
+  --ink-700: #d4d4d4;
+  --ink-800: #e8e8e8;
+  --ink-900: #f7f7f7;
 }
 
 @theme inline {
@@ -65,15 +67,18 @@
   --color-ink-800: var(--ink-800);
   --color-ink-900: var(--ink-900);
 
-  /* Brand: coral -> violet, deliberately distinct from a literal rose/pink clone.
-     Kept constant across themes (brand colors don't invert). */
-  --color-brand-coral: #ff6b5b;
-  --color-brand-violet: #7c3aed;
-  --color-brand-coral-soft: #ffe8e4;
-  --color-brand-violet-soft: #ede4fb;
+  /* Single sparing rose accent, in the spirit of Airbnb's signature color --
+     used for the logo, primary actions, ratings, and active states only, not
+     as a wash across the whole UI. brand-violet is kept as a token name for
+     backward compatibility with existing utility usage, and is now identical
+     to brand-coral so nothing renders as a two-tone gradient. */
+  --color-brand-coral: #ff385c;
+  --color-brand-violet: #ff385c;
+  --color-brand-coral-soft: #ffe8ec;
+  --color-brand-violet-soft: #ffe8ec;
 
   --color-success: #22c55e;
-  --color-error: #ef4444;
+  --color-error: #d93900;
   --color-warning: #f59e0b;
 }
 
@@ -92,28 +97,26 @@ body {
 }
 
 .brand-gradient {
-  background-image: linear-gradient(135deg, var(--color-brand-coral) 0%, var(--color-brand-violet) 100%);
+  background-image: none;
+  background-color: var(--color-brand-coral);
 }
 
 .brand-gradient-text {
-  background-image: linear-gradient(135deg, var(--color-brand-coral) 0%, var(--color-brand-violet) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  background-image: none;
+  color: var(--color-brand-coral);
 }
 
 .card-hover {
-  transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+  transition: box-shadow 200ms ease-out;
 }
 
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px -8px rgba(124, 58, 237, 0.18);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
 ::selection {
-  background: var(--color-brand-violet-soft);
-  color: var(--color-brand-violet);
+  background: var(--color-brand-coral-soft);
+  color: var(--color-brand-coral);
 }
 
 .scrollbar-none::-webkit-scrollbar {
@@ -126,67 +129,10 @@ body {
 }
 
 .nomly-calendar {
-  --rdp-accent-color: var(--color-brand-violet);
-  --rdp-accent-background-color: var(--color-brand-violet-soft);
+  --rdp-accent-color: var(--color-brand-coral);
+  --rdp-accent-background-color: var(--color-brand-coral-soft);
   --rdp-today-color: var(--color-brand-coral);
   --rdp-day_button-border-radius: 9999px;
-}
-
-/* Decorative blurred blobs used behind hero/empty-state sections for a less
-   templated, more "designed" feel than a flat background color. */
-.brand-blob {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(60px);
-  opacity: 0.55;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.dark .brand-blob {
-  opacity: 0.3;
-}
-
-.brand-blob-coral {
-  background: var(--color-brand-coral);
-}
-
-.brand-blob-violet {
-  background: var(--color-brand-violet);
-}
-
-.brand-dot-grid {
-  background-image: radial-gradient(var(--color-ink-300) 1px, transparent 1px);
-  background-size: 22px 22px;
-  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, black 40%, transparent 100%);
-  mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, black 40%, transparent 100%);
-  opacity: 0.5;
-}
-
-/* Gradient "ring" wrapper: an outer element painted with the brand gradient,
-   with the actual card content inset by the ring width so only a thin
-   gradient edge shows -- avoids needing a second DOM layer per usage. */
-.gradient-ring {
-  position: relative;
-}
-
-.gradient-ring::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background-image: linear-gradient(135deg, var(--color-brand-coral) 0%, var(--color-brand-violet) 100%);
-  opacity: 0;
-  transition: opacity 200ms ease-out;
-  z-index: -1;
-}
-
-.gradient-ring:hover::before {
-  opacity: 1;
-}
-
-.brand-gradient-underline {
-  background-image: linear-gradient(135deg, var(--color-brand-coral) 0%, var(--color-brand-violet) 100%);
 }
 
 @keyframes confetti-burst {
@@ -200,9 +146,9 @@ body {
   }
 }
 
-/* Branded price-pill markers for the interactive Leaflet map (replaces
-   Leaflet's default pin entirely, so there's no default-icon asset path to
-   fix -- see components/map/ListingsMap.tsx). */
+/* Price-pill markers for the interactive Leaflet map (replaces Leaflet's
+   default pin entirely, so there's no default-icon asset path to fix -- see
+   components/map/ListingsMap.tsx). */
 .nomly-map-pin-wrapper {
   background: transparent !important;
   border: none !important;
@@ -216,10 +162,11 @@ body {
   padding: 6px 11px;
   border-radius: 9999px;
   font-size: 12px;
-  font-weight: 700;
-  color: white;
-  background-image: linear-gradient(135deg, var(--color-brand-coral) 0%, var(--color-brand-violet) 100%);
-  box-shadow: 0 3px 10px rgba(26, 21, 35, 0.35);
+  font-weight: 600;
+  color: var(--ink-900);
+  background: var(--surface);
+  border: 1px solid var(--ink-200);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 120ms ease-out;
 }
@@ -227,17 +174,9 @@ body {
 .nomly-map-pin:hover {
   transform: translate(-50%, -100%) scale(1.08);
   z-index: 1000 !important;
-}
-
-.nomly-map-pin::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -4px;
-  transform: translateX(-50%);
-  border-width: 5px 5px 0 5px;
-  border-style: solid;
-  border-color: var(--color-brand-violet) transparent transparent transparent;
+  background: var(--ink-900);
+  color: var(--surface);
+  border-color: var(--ink-900);
 }
 
 .leaflet-popup-content-wrapper {
@@ -250,4 +189,3 @@ body {
   margin: 0;
   width: 220px !important;
 }
-
