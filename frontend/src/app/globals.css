@@ -200,3 +200,54 @@ body {
   }
 }
 
+/* Branded price-pill markers for the interactive Leaflet map (replaces
+   Leaflet's default pin entirely, so there's no default-icon asset path to
+   fix -- see components/map/ListingsMap.tsx). */
+.nomly-map-pin-wrapper {
+  background: transparent !important;
+  border: none !important;
+}
+
+.nomly-map-pin {
+  position: relative;
+  transform: translate(-50%, -100%);
+  display: inline-block;
+  white-space: nowrap;
+  padding: 6px 11px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  background-image: linear-gradient(135deg, var(--color-brand-coral) 0%, var(--color-brand-violet) 100%);
+  box-shadow: 0 3px 10px rgba(26, 21, 35, 0.35);
+  cursor: pointer;
+  transition: transform 120ms ease-out;
+}
+
+.nomly-map-pin:hover {
+  transform: translate(-50%, -100%) scale(1.08);
+  z-index: 1000 !important;
+}
+
+.nomly-map-pin::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0 5px;
+  border-style: solid;
+  border-color: var(--color-brand-violet) transparent transparent transparent;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  width: 220px !important;
+}
+

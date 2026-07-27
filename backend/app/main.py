@@ -2,17 +2,38 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import select
 
 from app.core.config import settings
 from app.db.base import Base
-from app.db.session import engine
+from app.db.session import SessionLocal, engine
 import app.models  # noqa: F401 -- ensures every model is registered before create_all
+from app.models.user import User
 from app.routers import amenities, auth, availability, bookings, favorites, listings, reviews, users
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
+
+    # Self-seed on startup if the DB is empty. This makes the app resilient to
+    # hosting platforms with ephemeral/non-persistent disks (serverless
+    # filesystems, free-tier restarts, etc.) -- rather than relying on a
+    # platform-specific "run this command before starting" convention, the
+    # app guarantees its own demo data on every cold start. Safe to run on
+    # every boot: idempotent (skips if data exists) and deterministic
+    # (random.seed(42) in app.seed), so a reset always reproduces the same
+    # dataset rather than silently drifting or duplicating.
+    if settings.auto_seed_on_startup:
+        db = SessionLocal()
+        try:
+            if db.scalar(select(User.id).limit(1)) is None:
+                from app.seed import seed
+
+                seed(db)
+        finally:
+            db.close()
+
     yield
 
 

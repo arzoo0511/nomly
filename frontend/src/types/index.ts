@@ -32,6 +32,8 @@ export interface ListingCard {
   city: string;
   region: string | null;
   country: string;
+  latitude: number;
+  longitude: number;
   price_per_night: number;
   max_guests: number;
   cover_image: string | null;

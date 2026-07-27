@@ -72,6 +72,8 @@ class ListingCardOut(BaseModel):
     city: str
     region: str | None
     country: str
+    latitude: float
+    longitude: float
     price_per_night: float
     max_guests: int
     cover_image: str | None

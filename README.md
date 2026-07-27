@@ -80,6 +80,7 @@ pytest -q
 | Server state | TanStack React Query | Caching, invalidation-on-mutation, background refetch, without hand-rolled fetch/loading state |
 | Forms | react-hook-form + zod | Typed validation for the listing create/edit form |
 | Calendar | react-day-picker | Range selection with a `disabled` matcher fed from the booked-dates API |
+| Map | react-leaflet + OpenStreetMap tiles | Interactive map view with branded price-pill pins, no API key needed |
 | Icons | lucide-react | Single consistent icon set for amenities, categories, and UI chrome |
 | Toasts | sonner | Feedback on every mutation (booking, favorite, review, listing CRUD, auth errors) |
 | Backend framework | FastAPI | Required by the assignment; async-ready, typed request/response models via Pydantic |
@@ -168,7 +169,7 @@ Auth-required endpoints expect `Authorization: Bearer <token>`. `GET /listings/`
 
 ## 6. Feature Checklist
 
-- Home/Explore: search bar (location + dates + guests), category pills + full filter modal (price range, property type, amenities), sort, pagination, "Surprise me" random-listing discovery.
+- Home/Explore: search bar (location + dates + guests), category pills + full filter modal (price range, property type, amenities), sort, pagination, "Surprise me" random-listing discovery, and a List/Map toggle — Map mode plots the current page's results on an interactive OpenStreetMap view with branded price-pill pins; clicking a pin opens a popup with a thumbnail/price/rating that links to the listing.
 - Listing detail: photo gallery with lightbox, amenities, host card with superhost badge, decorative static map, reviews, inline booking widget with a live calendar (booked ranges greyed out).
 - Booking flow: date + guest validation, price breakdown (nightly × nights + cleaning + service fee), mocked-checkout confirmation modal with a small celebratory moment, My Trips (upcoming/past, cancel, write a review).
 - Host CRUD: create/edit/unlist listings, host dashboard with owned listings + reservations across all of them.
@@ -181,9 +182,9 @@ Auth-required endpoints expect `Authorization: Bearer <token>`. `GET /listings/`
 
 - **Payments** are entirely simulated — the booking confirmation modal says so explicitly; no card details are ever collected.
 - **Messaging** and **identity verification** are static "Coming soon" pages per the assignment's scope.
-- **Maps** are a custom decorative SVG (gradient blobs + a pin + city/country label), not a real interactive map — latitude/longitude are stored but only used as flavor data, per the assignment's "static map image is fine" allowance.
+- **Maps**: the home page has a real interactive map (react-leaflet + OpenStreetMap, branded price-pill pins, click-through popups) as a bonus feature. The listing detail page's "Where you'll be" section intentionally stays a decorative static SVG (gradient blobs + a pin + city/country label, no exact address) — mirroring how Airbnb only reveals the approximate area pre-booking, not a limitation of the map integration.
 - **Images** are deterministic placeholder photos from `picsum.photos/seed/...`. Because picsum has no category filter, a "Boutique Room" listing may show an arbitrary stock photo (a leaf, a bridge, etc.) rather than an actual interior — a known and accepted tradeoff of using a keyless placeholder image service.
 - **Auth** has no email verification and a single long-lived JWT (no refresh tokens) — appropriate for a local demo, not production-grade.
 - **Concurrency:** the booking-overlap check uses an in-process lock rather than database-level row locking (see the architecture section above) — correct for a single-process dev server, not a distributed deployment.
-- **Deployment:** this submission is local-only for now — no GitHub push or hosted deployment was performed in this session.
+- **Deployment:** the source is pushed to a public GitHub repo. The backend self-seeds its demo data on startup if the database is empty (`AUTO_SEED_ON_STARTUP`, on by default) — idempotent and deterministic (`random.seed(42)`), so it's resilient to hosting platforms with ephemeral/non-persistent disks (serverless filesystems, free-tier restarts): worst case, a restart resets to the same clean demo dataset rather than serving a blank app. `backend/main.py` re-exports the FastAPI `app` at the repo root as an entrypoint alias for platforms that expect it there (e.g. Vercel) alongside the real one at `backend/app/main.py`. A `vercel.json` (multi-service: `frontend/` + `backend/`, `/api/*` rewritten to the backend service) and `render.yaml` (Blueprint for the backend alone, with a persistent disk) are both included at the repo root as two supported deployment paths.
 - `npm audit` flags several **high-severity advisories in dev-only tooling** (ESLint's dependency chain, PostCSS, `sharp`) pulled in transitively by the pinned Next.js 16 toolchain. These are build-time/dev dependencies, not runtime application code, and aren't exposed to end users of the running app.
